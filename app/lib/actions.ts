@@ -77,10 +77,10 @@ export async function createInvoice(prevState: State, formData: FormData) {
 }
 
 export async function updateInvoice(
-  id: string,
   prevState: State,
   formData: FormData,
 ) {
+  const id = formData.get('id') as string;
   const validatedFields = UpdateInvoice.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
@@ -111,7 +111,8 @@ export async function updateInvoice(
   redirect('/dashboard/invoices');
 }
 
-export async function deleteInvoice(id: string) {
+export async function deleteInvoice(formData: FormData) {
+  const id = formData.get('id') as string;
   try {
     await sql`DELETE FROM invoices WHERE id = ${id}`;
   } catch (error) {
